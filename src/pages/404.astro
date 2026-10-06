@@ -1,0 +1,13 @@
+---
+import Base from '../layouts/Base.astro';
+import { url } from '../lib/paths';
+---
+<Base title="404" breadcrumb={['404']}>
+  <div class="page-hero">
+    <div class="page-eyebrow red">// Error</div>
+    <h1 class="page-title">404 — Not found</h1>
+    <div class="page-subtitle">Esta página no existe (todavía).</div>
+  </div>
+  <terminal-block user="markel" host="kali" sym="㉿" path="~" cmd="cat pagina.html" tag="misc">cat: pagina.html: No such file or directory</terminal-block>
+  <a class="back-link" href={url('/')}>← Volver al inicio</a>
+</Base>

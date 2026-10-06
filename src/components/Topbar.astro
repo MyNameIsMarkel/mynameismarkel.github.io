@@ -1,0 +1,17 @@
+---
+/* Barra superior con la miga de pan y el interruptor de tema */
+interface Props { breadcrumb: string[] }
+const { breadcrumb } = Astro.props;
+---
+<header id="topbar">
+  <button class="topbar-toggle" onclick="toggleSidebar()" aria-label="Menú"><span></span><span></span><span></span></button>
+  <div class="topbar-breadcrumb">
+    {breadcrumb.map((part, i) => (
+      <>{i > 0 && <span class="sep">›</span>}{part}</>
+    ))}
+  </div>
+  <div class="topbar-actions">
+    <span class="theme-label" id="theme-label">DARK</span>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Cambiar tema"></button>
+  </div>
+</header>

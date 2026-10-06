@@ -1,0 +1,120 @@
+/* ─── SIDEBAR ────────────────────────────────────────────── */
+#sidebar {
+  width: var(--sidebar-w);
+  min-height: 100vh;
+  background: var(--sidebar-bg);
+  position: fixed;
+  left: 0; top: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  border-right: 2px solid var(--red);
+  transition: transform 0.35s cubic-bezier(.77,0,.18,1), background 0.3s;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+#sidebar.collapsed {
+  transform: translateX(calc(-1 * var(--sidebar-w)));
+}
+
+.sidebar-brand {
+  padding: 28px 24px 20px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+.sidebar-brand::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; left: 0;
+  width: 60px; height: 3px;
+  background: var(--red);
+}
+.brand-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.7rem;
+  letter-spacing: 0.12em;
+  color: var(--fg);
+  line-height: 1;
+}
+.brand-sub {
+  font-size: 0.68rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--grey);
+  margin-top: 4px;
+}
+
+.nav-tree { padding: 16px 0 24px; flex: 1; }
+.nav-section { margin-bottom: 4px; }
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 20px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: var(--fg);
+  cursor: pointer;
+  position: relative;
+  transition: background 0.2s, color 0.2s;
+  user-select: none;
+  text-decoration: none;
+}
+.nav-item:hover { background: rgba(177,68,65,0.15); color: var(--red); }
+.nav-item.active { color: var(--red); background: rgba(177,68,65,0.12); }
+.nav-item.active::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--red);
+}
+
+.nav-l0 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.05rem;
+  letter-spacing: 0.1em;
+  padding: 10px 20px;
+  color: var(--fg);
+}
+.nav-l0:hover { color: var(--red); background: rgba(177,68,65,0.12); }
+.nav-l0.active { color: var(--red); }
+.nav-l0.active::before { background: var(--red); }
+
+.nav-l1 { padding-left: 32px; font-weight: 600; color: var(--blue); font-size: 0.8rem; letter-spacing: 0.05em; }
+.nav-l1:hover { color: var(--blue); background: rgba(99,124,154,0.12); }
+
+.nav-l2 { padding-left: 48px; font-weight: 400; font-size: 0.76rem; color: var(--grey); }
+.nav-l2:hover { color: var(--fg); background: rgba(224,213,185,0.06); }
+
+.nav-l3 { padding-left: 64px; font-weight: 300; font-size: 0.72rem; color: var(--grey); opacity: 0.8; }
+.nav-l3:hover { color: var(--fg); opacity: 1; background: rgba(224,213,185,0.04); }
+
+.nav-toggle { margin-left: auto; font-size: 0.6rem; transition: transform 0.25s; color: var(--grey); flex-shrink: 0; }
+.nav-toggle.open { transform: rotate(90deg); }
+.nav-children { display: none; }
+.nav-children.open { display: block; }
+
+.sidebar-footer {
+  padding: 16px 20px;
+  border-top: 1px solid var(--border);
+  font-size: 0.68rem;
+  color: var(--grey);
+  letter-spacing: 0.08em;
+}
+
+/* ─── OVERLAY mobile ─────────────────────────────────────── */
+#overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 99;
+}
+@media (max-width: 768px) {
+  #sidebar { transform: translateX(calc(-1 * var(--sidebar-w))); }
+  #sidebar.open { transform: translateX(0); }
+  #overlay { display: block; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+  #overlay.visible { opacity: 1; pointer-events: all; }
+}

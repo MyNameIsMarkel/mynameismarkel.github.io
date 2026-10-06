@@ -1,0 +1,41 @@
+/* ─── TOKENS ─────────────────────────────────────────────── */
+:root {
+  --bg:        #1A1A1A;
+  --fg:        #E0D5B9;
+  --red:       #B14441;
+  --blue:      #637C9A;
+  --gold:      #D3A044;
+  --grey:      #656565;
+  --sidebar-w: 280px;
+  --sidebar-bg:#111111;
+  --card-bg:   #222222;
+  --border:    rgba(224,213,185,0.08);
+  --shadow:    0 4px 24px rgba(0,0,0,0.5);
+}
+[data-theme="light"] {
+  --bg:        #E0D5B9;
+  --fg:        #1A1A1A;
+  --sidebar-bg:#d4c9a8;
+  --card-bg:   #cdc2a2;
+  --border:    rgba(26,26,26,0.12);
+  --shadow:    0 4px 24px rgba(0,0,0,0.15);
+}
+
+/* ─── RESET ──────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  min-height: 100vh;
+  display: flex;
+  overflow-x: hidden;
+  transition: background 0.3s, color 0.3s;
+}
+
+/* ─── SCROLLBAR ──────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--grey); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--red); }

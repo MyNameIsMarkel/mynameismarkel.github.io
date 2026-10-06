@@ -1,0 +1,51 @@
+---
+/* Carcasa común de TODAS las páginas: <head>, sidebar, topbar y <main>.
+   Uso:  <Base title="Projects" breadcrumb={['PROJECTS']}> ...contenido... </Base> */
+import Sidebar from '../components/Sidebar.astro';
+import Topbar from '../components/Topbar.astro';
+import { url } from '../lib/paths';
+import { SITE } from '../data/site';
+
+interface Props {
+  title: string;
+  breadcrumb: string[];
+  description?: string;
+  styles?: string[];   // CSS extra solo para esta página (p.ej. ['about.css'])
+}
+const { title, breadcrumb, description, styles = [] } = Astro.props;
+const css = ['tokens.css', 'sidebar.css', 'layout.css', 'components.css', 'editor.css', 'notes.css', ...styles];
+---
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title} — {SITE.name}</title>
+  {description && <meta name="description" content={description} />}
+  <link rel="icon" type="image/svg+xml" href={url('images/logo-m.svg')} />
+
+  <!-- Aplica el tema guardado ANTES de pintar (evita el parpadeo claro/oscuro) -->
+  <script is:inline>
+    try { const t = localStorage.getItem('theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  {css.map((f) => <link rel="stylesheet" href={url(`styles/${f}`)} />)}
+
+  <!-- JS global + componentes <terminal-block> y <code-editor> (disponibles en todas las páginas) -->
+  <script is:inline src={url('scripts/main.js')} defer></script>
+  <script is:inline src={url('scripts/terminal.js')} defer></script>
+  <script is:inline src={url('scripts/editor.js')} defer></script>
+</head>
+<body>
+  <Sidebar />
+  <Topbar breadcrumb={breadcrumb} />
+  <main id="main">
+    <section class="page active">
+      <slot />
+    </section>
+  </main>
+</body>
+</html>

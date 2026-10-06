@@ -1,0 +1,32 @@
+---
+/* Menú lateral. Equivale a tu antiguo components/sidebar.js, pero se genera
+   al compilar: NOTES se rellena solo con los .md de src/content/notes. */
+import NavItem from './NavItem.astro';
+import { buildNotesTree, type NavNode } from '../lib/nav';
+import { url, norm } from '../lib/paths';
+import { SITE } from '../data/site';
+
+const NAV: NavNode[] = [
+  { label: 'ABOUT ME',           level: 0, order: 0, href: url('/') },
+  { label: 'NOTES',              level: 0, order: 1, children: await buildNotesTree() },
+  { label: 'PROJECTS',           level: 0, order: 2, href: url('projects/') },
+  { label: 'DOCUMENT TEMPLATES', level: 0, order: 3, href: url('templates/') },
+];
+
+let current = norm(Astro.url.pathname);
+// dentro de un proyecto concreto, marca PROJECTS como activo
+if (current.startsWith(norm(url('projects/'))) ) current = norm(url('projects/'));
+---
+<div id="overlay" onclick="closeSidebar()"></div>
+<nav id="sidebar" role="navigation" aria-label="Navegación principal">
+  <div class="sidebar-brand">
+    <div class="brand-title">{SITE.name}</div>
+    <div class="brand-sub">{SITE.subtitle}</div>
+  </div>
+  <div class="nav-tree">
+    {NAV.map((node) => (
+      <div class="nav-section"><NavItem node={node} current={current} /></div>
+    ))}
+  </div>
+  <div class="sidebar-footer">&copy; {new Date().getFullYear()} {SITE.name}<br />{SITE.footer}</div>
+</nav>

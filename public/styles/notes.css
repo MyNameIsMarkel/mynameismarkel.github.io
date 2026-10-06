@@ -1,0 +1,127 @@
+/* ═══════════════════════════════════════════════════════════
+   notes.css — estilo del contenido escrito en Markdown
+   (notas y proyectos). Reutiliza la estética de .note-section.
+   ═══════════════════════════════════════════════════════════ */
+
+.note-body { max-width: 920px; }
+
+.note-body h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.5rem; letter-spacing: 0.1em; font-weight: 400;
+  color: var(--blue);
+  margin: 40px 0 12px; padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.note-body > h2:first-child { margin-top: 0; }
+.note-body h3 {
+  font-size: 0.95rem; font-weight: 600; letter-spacing: 0.05em;
+  color: var(--gold); margin: 24px 0 8px;
+}
+.note-body h4 {
+  font-size: 0.85rem; font-weight: 600; color: var(--fg);
+  margin: 18px 0 6px; text-transform: uppercase; letter-spacing: 0.08em;
+}
+.note-body p {
+  font-size: 0.9rem; line-height: 1.8;
+  color: var(--fg); opacity: 0.88; margin-bottom: 12px;
+}
+.note-body a { color: var(--red); text-decoration: none; border-bottom: 1px dashed rgba(177,68,65,0.5); }
+.note-body a:hover { border-bottom-style: solid; }
+.note-body strong { color: var(--fg); font-weight: 600; }
+
+/* listas con la flecha ▸ roja */
+.note-body ul, .note-body ol { padding-left: 22px; margin-bottom: 14px; }
+.note-body li {
+  font-size: 0.87rem; line-height: 1.8;
+  color: var(--fg); opacity: 0.85;
+}
+.note-body ul > li { list-style: none; position: relative; padding-left: 12px; }
+.note-body ul > li::before {
+  content: '▸'; position: absolute; left: -4px;
+  color: var(--red); font-size: 0.7rem;
+}
+.note-body ol > li::marker { color: var(--red); font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; }
+
+/* > cita  ->  mismo estilo que .note-blockquote */
+.note-body blockquote {
+  border-left: 3px solid var(--gold);
+  padding: 10px 16px; margin: 16px 0;
+  background: rgba(211,160,68,0.06);
+}
+.note-body blockquote p { color: var(--gold); font-style: italic; font-size: 0.85rem; margin: 0; opacity: 1; }
+
+/* `código en línea` */
+.note-body :not(pre) > code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8em;
+  padding: 1px 6px;
+  background: rgba(177,68,65,0.1);
+  border: 1px solid rgba(177,68,65,0.25);
+  color: var(--red);
+  border-radius: 3px;
+}
+
+/* ```bloques de código``` (resaltados por Astro, tema dark-plus) */
+.note-body pre.astro-code {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 13px; line-height: 1.7;
+  padding: 16px 18px;
+  margin: 20px 0;
+  border: 1px solid #2e2e2e;
+  border-radius: 10px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+  overflow-x: auto;
+  position: relative;
+}
+.note-body pre.astro-code[data-language]::before {
+  content: attr(data-language);
+  position: absolute; top: 6px; right: 12px;
+  font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: #555;
+}
+
+/* tablas */
+.note-body table { width: 100%; border-collapse: collapse; margin: 18px 0; font-size: 0.82rem; }
+.note-body th {
+  text-align: left; padding: 8px 12px;
+  font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--gold); border-bottom: 1px solid var(--red);
+}
+.note-body td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--fg); opacity: 0.88; }
+.note-body tr:hover td { background: rgba(177,68,65,0.05); }
+
+.note-body hr { border: none; height: 1px; margin: 32px 0; background: linear-gradient(to right, var(--red), transparent); }
+.note-body img { max-width: 100%; border: 1px solid var(--border); margin: 12px 0; }
+
+/* etiquetas bajo el título de una nota / proyecto */
+.page-tags { margin-top: 6px; }
+
+/* ─── Tarjetas y filas convertidas en enlaces ───────────── */
+a.project-card, a.template-item { text-decoration: none; color: inherit; display: block; }
+a.template-item { display: flex; }
+.project-link {
+  display: inline-block; margin-top: 14px;
+  font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--gold); text-decoration: none;
+}
+.project-link:hover { color: var(--red); }
+
+/* listado de notas (página /notes/) */
+.notes-list { display: flex; flex-direction: column; gap: 10px; }
+.notes-list .template-item { cursor: pointer; }
+.note-path { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--blue); letter-spacing: 0.08em; }
+
+/* botón "volver" */
+.back-link {
+  display: inline-block; margin-top: 48px;
+  font-family: 'JetBrains Mono', monospace; font-size: 0.75rem;
+  color: var(--grey); text-decoration: none; letter-spacing: 0.08em;
+}
+.back-link:hover { color: var(--red); }
+
+@media (max-width: 768px) {
+  .projects-grid { grid-template-columns: 1fr; }
+  .info-grid { grid-template-columns: 1fr; }
+}

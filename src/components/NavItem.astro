@@ -1,0 +1,26 @@
+---
+/* Un nodo del menú: enlace o grupo plegable (se llama a sí mismo para los hijos) */
+import type { NavNode } from '../lib/nav';
+import { norm } from '../lib/paths';
+
+interface Props { node: NavNode; current: string }
+const { node, current } = Astro.props;
+
+const containsActive = (n: NavNode): boolean =>
+  (!!n.href && norm(n.href) === current) || (n.children ?? []).some(containsActive);
+
+const cls = `nav-item nav-l${node.level}`;
+const open = node.children ? containsActive(node) : false;
+---
+{node.children ? (
+  <>
+    <div class={cls} onclick="toggleNav(this)">
+      {node.label} <span class:list={['nav-toggle', { open }]}>▶</span>
+    </div>
+    <div class:list={['nav-children', { open }]}>
+      {node.children.map((child) => <Astro.self node={child} current={current} />)}
+    </div>
+  </>
+) : (
+  <a class:list={[cls, { active: norm(node.href!) === current }]} href={node.href}>{node.label}</a>
+)}
