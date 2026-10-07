@@ -98,3 +98,27 @@
 @media (prefers-reduced-motion: reduce) {
   .page.active > * { animation: none; }
 }
+
+/* ─── LANGUAGE TOGGLE (ES | EN) ──────────────────────────── */
+.lang-toggle {
+  display: flex; align-items: stretch;
+  height: 26px;
+  border: 1.5px solid var(--border);
+  border-radius: 13px;
+  overflow: hidden;
+  text-decoration: none;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem; letter-spacing: 0.1em;
+  margin-right: 10px;
+  transition: border-color 0.2s;
+}
+.lang-toggle span {
+  display: flex; align-items: center;
+  padding: 0 9px;
+  color: var(--grey);
+  transition: background 0.2s, color 0.2s;
+}
+.lang-toggle span.active { background: var(--red); color: #E0D5B9; }
+.lang-toggle:hover { border-color: var(--red); }
+.lang-toggle:hover span:not(.active) { color: var(--red); }
+@media (max-width: 480px) { .theme-label { display: none; } }

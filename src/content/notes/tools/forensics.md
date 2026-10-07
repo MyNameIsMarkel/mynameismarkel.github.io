@@ -1,5 +1,6 @@
 ---
 title: "Análisis forense"
+titleEn: "Forensics"   # título en el menú inglés mientras no haya traducción
 order: 7
 date: 2026-10-06
 ---

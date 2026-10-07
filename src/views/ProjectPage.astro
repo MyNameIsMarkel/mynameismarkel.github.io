@@ -1,0 +1,31 @@
+---
+/* Página de detalle de un proyecto (los dos idiomas) */
+import { render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import type { ProjectItem } from '../lib/nav';
+import { tagInfo } from '../lib/tags';
+import { useT, type Lang } from '../i18n/ui';
+import { localePath } from '../i18n/utils';
+
+interface Props { lang: Lang; project: ProjectItem }
+const { lang, project } = Astro.props;
+const t = useT(lang);
+const data = project.entry.data;
+const { Content } = await render(project.entry);
+---
+<Base lang={lang} title={project.title} breadcrumb={[t('nav.projects'), project.title]} description={data.description}>
+  <div class="page-hero gold-accent">
+    <div class="page-eyebrow gold">// {t('project.eyebrow')}</div>
+    <h1 class="page-title">{project.title}</h1>
+    <div class="page-subtitle">{data.description}</div>
+    <div class="page-tags">
+      {data.tags.map((tg) => { const { label, cls } = tagInfo(tg); return <span class={`card-tag ${cls}`}>{label}</span>; })}
+    </div>
+    {data.repo && <a class="project-link" href={data.repo} target="_blank" rel="noopener">→ {t('project.repo')}</a>}
+  </div>
+  {project.fallback && <div class="lang-notice">{t('project.fallback')}</div>}
+  <article class="note-body">
+    <Content />
+  </article>
+  <a class="back-link" href={localePath(lang, 'projects/')}>← {t('project.back')}</a>
+</Base>

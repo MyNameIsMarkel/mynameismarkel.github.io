@@ -1,5 +1,6 @@
 ---
 title: "Social Engineering"
+titleEn: "Social engineering"   # título en el menú inglés mientras no haya traducción
 order: 11
 date: 2026-10-06
 ---

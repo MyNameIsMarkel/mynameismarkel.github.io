@@ -1,5 +1,6 @@
 ---
 title: "Python"
+titleEn: "Python"   # título en el menú inglés mientras no haya traducción
 order: 2
 date: 2026-10-06
 ---
