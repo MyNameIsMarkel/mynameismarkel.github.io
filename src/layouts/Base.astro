@@ -1,28 +1,37 @@
 ---
 /* Carcasa común de TODAS las páginas: <head>, sidebar, topbar y <main>.
-   Uso:  <Base title="Projects" breadcrumb={['PROJECTS']}> ...contenido... </Base> */
+   Uso:  <Base lang="es" title="Proyectos" breadcrumb={['PROYECTOS']}> ... </Base> */
 import Sidebar from '../components/Sidebar.astro';
 import Topbar from '../components/Topbar.astro';
 import { url } from '../lib/paths';
 import { SITE } from '../data/site';
+import type { Lang } from '../i18n/ui';
+import { alternatePath } from '../i18n/utils';
 
 interface Props {
+  lang: Lang;
   title: string;
   breadcrumb: string[];
   description?: string;
   styles?: string[];   // CSS extra solo para esta página (p.ej. ['about.css'])
 }
-const { title, breadcrumb, description, styles = [] } = Astro.props;
+const { lang, title, breadcrumb, description, styles = [] } = Astro.props;
 const css = ['tokens.css', 'sidebar.css', 'layout.css', 'components.css', 'editor.css', 'notes.css', ...styles];
+const abs = (p: string) => new URL(p, Astro.site).href;
 ---
 <!DOCTYPE html>
-<html lang="es" data-theme="dark">
+<html lang={lang} data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{title} — {SITE.name}</title>
   {description && <meta name="description" content={description} />}
   <link rel="icon" type="image/svg+xml" href={url('images/logo-m.svg')} />
+
+  <!-- Versiones de esta página en cada idioma (para Google) -->
+  <link rel="alternate" hreflang="es" href={abs(alternatePath(Astro.url.pathname, 'es'))} />
+  <link rel="alternate" hreflang="en" href={abs(alternatePath(Astro.url.pathname, 'en'))} />
+  <link rel="alternate" hreflang="x-default" href={abs(alternatePath(Astro.url.pathname, 'es'))} />
 
   <!-- Aplica el tema guardado ANTES de pintar (evita el parpadeo claro/oscuro) -->
   <script is:inline>
@@ -34,14 +43,14 @@ const css = ['tokens.css', 'sidebar.css', 'layout.css', 'components.css', 'edito
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   {css.map((f) => <link rel="stylesheet" href={url(`styles/${f}`)} />)}
 
-  <!-- JS global + componentes <terminal-block> y <code-editor> (disponibles en todas las páginas) -->
+  <!-- JS global + componentes <terminal-block> y <code-editor> -->
   <script is:inline src={url('scripts/main.js')} defer></script>
   <script is:inline src={url('scripts/terminal.js')} defer></script>
   <script is:inline src={url('scripts/editor.js')} defer></script>
 </head>
 <body>
-  <Sidebar />
-  <Topbar breadcrumb={breadcrumb} />
+  <Sidebar lang={lang} />
+  <Topbar lang={lang} breadcrumb={breadcrumb} />
   <main id="main">
     <section class="page active">
       <slot />

@@ -1,5 +1,6 @@
 ---
 title: "Burp Suite"
+titleEn: "Burp Suite"   # título en el menú inglés mientras no haya traducción
 order: 1
 date: 2026-10-06
 ---

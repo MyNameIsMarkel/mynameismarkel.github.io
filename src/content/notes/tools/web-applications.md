@@ -1,5 +1,6 @@
 ---
 title: "Aplicaciones web"
+titleEn: "Web applications"   # título en el menú inglés mientras no haya traducción
 order: 9
 date: 2026-10-06
 ---

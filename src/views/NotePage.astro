@@ -1,0 +1,33 @@
+---
+/* Página de una nota (los dos idiomas) */
+import { render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import { noteFolders, type NoteItem } from '../lib/nav';
+import { tagInfo } from '../lib/tags';
+import { useT, dateLocale, type Lang } from '../i18n/ui';
+
+interface Props { lang: Lang; note: NoteItem }
+const { lang, note } = Astro.props;
+const t = useT(lang);
+const data = note.entry.data;
+const { Content } = await render(note.entry);
+const crumbs = [t('nav.notes'), ...noteFolders(note.id, lang), note.title];
+const date = data.date?.toLocaleDateString(dateLocale(lang), { day: 'numeric', month: 'long', year: 'numeric' });
+---
+<Base lang={lang} title={note.title} breadcrumb={crumbs} description={data.description}>
+  <div class="page-hero">
+    <div class="page-eyebrow">// {crumbs.slice(0, -1).join(' › ')}</div>
+    <h1 class="page-title">{note.title}</h1>
+    {data.description && <div class="page-subtitle">{data.description}</div>}
+    {date && <div class="page-subtitle">{t('updated')}: {date}</div>}
+    {data.tags.length > 0 && (
+      <div class="page-tags">
+        {data.tags.map((tg) => { const { label, cls } = tagInfo(tg); return <span class={`card-tag ${cls}`}>{label}</span>; })}
+      </div>
+    )}
+  </div>
+  {note.fallback && <div class="lang-notice" lang={lang}>{t('notes.fallback')}</div>}
+  <article class="note-body" lang={note.fallback ? (lang === 'es' ? 'en' : 'es') : lang}>
+    <Content />
+  </article>
+</Base>

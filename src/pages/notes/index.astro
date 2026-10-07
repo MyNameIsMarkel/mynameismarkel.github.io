@@ -1,27 +1,4 @@
 ---
-/* /notes/ — índice con todas las notas */
-import Base from '../../layouts/Base.astro';
-import { getNotes, noteBreadcrumb } from '../../lib/nav';
-import { url } from '../../lib/paths';
-
-const notes = (await getNotes()).sort((a, b) => a.id.localeCompare(b.id));
+import NotesIndex from '../../views/NotesIndex.astro';
 ---
-<Base title="Notes" breadcrumb={['NOTES']}>
-  <div class="page-hero">
-    <div class="page-eyebrow">// Knowledge base</div>
-    <h1 class="page-title">NOTES</h1>
-    <div class="page-subtitle">{notes.length} notas</div>
-  </div>
-  <div class="notes-list">
-    {notes.map((n) => (
-      <a class="template-item" href={url(`notes/${n.id}/`)}>
-        <div class="template-icon">›_</div>
-        <div>
-          <div class="template-name">{n.data.title}</div>
-          <div class="note-path">{noteBreadcrumb(n).slice(1, -1).join(' › ') || 'General'}</div>
-        </div>
-        <span class="template-arrow">→</span>
-      </a>
-    ))}
-  </div>
-</Base>
+<NotesIndex lang="es" />

@@ -1,17 +1,28 @@
 ---
-/* Barra superior con la miga de pan y el interruptor de tema */
-interface Props { breadcrumb: string[] }
-const { breadcrumb } = Astro.props;
+/* Barra superior: miga de pan + selector de idioma + interruptor de tema */
+import { useT, type Lang } from '../i18n/ui';
+import { alternatePath } from '../i18n/utils';
+
+interface Props { breadcrumb: string[]; lang: Lang }
+const { breadcrumb, lang } = Astro.props;
+const t = useT(lang);
+const other: Lang = lang === 'es' ? 'en' : 'es';
+const otherHref = alternatePath(Astro.url.pathname, other);
 ---
 <header id="topbar">
-  <button class="topbar-toggle" onclick="toggleSidebar()" aria-label="Menú"><span></span><span></span><span></span></button>
+  <button class="topbar-toggle" onclick="toggleSidebar()" aria-label={t('menu.aria')}><span></span><span></span><span></span></button>
   <div class="topbar-breadcrumb">
     {breadcrumb.map((part, i) => (
       <>{i > 0 && <span class="sep">›</span>}{part}</>
     ))}
   </div>
   <div class="topbar-actions">
-    <span class="theme-label" id="theme-label">DARK</span>
-    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Cambiar tema"></button>
+    <a class="lang-toggle" href={otherHref} hreflang={other} lang={other} aria-label={t('lang.aria')}
+       onclick={`try{localStorage.setItem('lang','${other}')}catch(e){}`}>
+      <span class:list={[{ active: lang === 'es' }]}>ES</span>
+      <span class:list={[{ active: lang === 'en' }]}>EN</span>
+    </a>
+    <span class="theme-label" id="theme-label">{t('theme.dark')}</span>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label={t('theme.aria')}></button>
   </div>
 </header>

@@ -1,33 +1,12 @@
 ---
-/* Plantilla de CADA nota: src/content/notes/tools/recon/nmap.md -> /notes/tools/recon/nmap/ */
-import { render } from 'astro:content';
-import Base from '../../layouts/Base.astro';
-import { getNotes, noteBreadcrumb } from '../../lib/nav';
-import { tagInfo } from '../../lib/tags';
+/* Una página por cada nota: src/content/notes/tools/recon/nmap.md -> /notes/tools/recon/nmap/ */
+import NotePage from '../../views/NotePage.astro';
+import { getNotes } from '../../lib/nav';
 
 export async function getStaticPaths() {
-  const notes = await getNotes();
+  const notes = await getNotes('es');
   return notes.map((note) => ({ params: { id: note.id }, props: { note } }));
 }
-
 const { note } = Astro.props;
-const { Content } = await render(note);
-const crumbs = noteBreadcrumb(note);
-const date = note.data.date?.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
 ---
-<Base title={note.data.title} breadcrumb={crumbs} description={note.data.description}>
-  <div class="page-hero">
-    <div class="page-eyebrow">// {crumbs.slice(0, -1).join(' › ')}</div>
-    <h1 class="page-title">{note.data.title}</h1>
-    {note.data.description && <div class="page-subtitle">{note.data.description}</div>}
-    {date && <div class="page-subtitle">Última actualización: {date}</div>}
-    {note.data.tags.length > 0 && (
-      <div class="page-tags">
-        {note.data.tags.map((t) => { const { label, cls } = tagInfo(t); return <span class={`card-tag ${cls}`}>{label}</span>; })}
-      </div>
-    )}
-  </div>
-  <article class="note-body">
-    <Content />
-  </article>
-</Base>
+<NotePage lang="es" note={note} />
