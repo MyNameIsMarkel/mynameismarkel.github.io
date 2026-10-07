@@ -59,6 +59,12 @@
     },
   };
 
+  /* Textos según el idioma de la página (<html lang="es|en">) */
+  const EN = (document.documentElement.lang || '').startsWith('en');
+  const TXT = EN
+    ? { copy: 'copy code', copied: '✓ copied', lines: 'lines', file: 'file' }
+    : { copy: 'copiar código', copied: '✓ copiado', lines: 'líneas', file: 'archivo' };
+
   const ALIAS = { c: 'c', py: 'python', python: 'python', js: 'javascript', javascript: 'javascript' };
   const ICONS = { c: '©', python: '🐍', javascript: 'JS' };
 
@@ -183,7 +189,7 @@
         const lang = s.dataset.lang || 'text';
         const key = ALIAS[lang.toLowerCase()] || 'default';
         return {
-          name: s.dataset.name || ('archivo' + key),
+          name: s.dataset.name || (TXT.file + key),
           lang,
           key,
           icon: s.dataset.icon || ICONS[key] || '<>',
@@ -207,7 +213,7 @@
           <div class="ed-statusbar">
             <div class="ed-statusbar-left">
               <span data-role="lang"></span>
-              <button class="ed-copy-btn" data-role="copy">copiar código</button>
+              <button class="ed-copy-btn" data-role="copy">${TXT.copy}</button>
             </div>
             <div class="ed-statusbar-right">
               <span>UTF-8</span>
@@ -228,7 +234,7 @@
         const rawLines = f.code.split('\n');
 
         langEl.textContent = f.lang;
-        linesEl.textContent = rawLines.length + ' líneas';
+        linesEl.textContent = rawLines.length + ' ' + TXT.lines;
         gutterEl.innerHTML = rawLines.map((_, i) => `<div class="ln">${i + 1}</div>`).join('');
         codeEl.innerHTML = highlight(f.code, f.key);
         minimapEl.innerHTML = rawLines.map((l) => {
@@ -254,9 +260,9 @@
 
       copyEl.addEventListener('click', () => {
         navigator.clipboard.writeText(files[current].code).then(() => {
-          copyEl.textContent = '✓ copiado';
+          copyEl.textContent = TXT.copied;
           copyEl.classList.add('done');
-          setTimeout(() => { copyEl.textContent = 'copiar código'; copyEl.classList.remove('done'); }, 1500);
+          setTimeout(() => { copyEl.textContent = TXT.copy; copyEl.classList.remove('done'); }, 1500);
         });
       });
 

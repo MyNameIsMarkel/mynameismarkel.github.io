@@ -41,12 +41,18 @@ function toggleNav(el) {
 }
 
 /* ─── THEME ──────────────────────────────────────────────── */
+const THEME_LABELS = { es: ['OSCURO', 'CLARO'], en: ['DARK', 'LIGHT'] };
+function themeLabel(isLight) {
+  const l = THEME_LABELS[document.documentElement.lang] || THEME_LABELS.en;
+  return isLight ? l[1] : l[0];
+}
+
 function toggleTheme() {
   const html = document.documentElement;
   const isLight = html.getAttribute('data-theme') === 'light';
   html.setAttribute('data-theme', isLight ? 'dark' : 'light');
   const lbl = document.getElementById('theme-label');
-  if (lbl) lbl.textContent = isLight ? 'DARK' : 'LIGHT';
+  if (lbl) lbl.textContent = themeLabel(!isLight);
   try { localStorage.setItem('theme', isLight ? 'dark' : 'light'); } catch (e) {}
 }
 
@@ -61,8 +67,7 @@ function toggleTheme() {
 window.addEventListener('DOMContentLoaded', () => {
   const lbl = document.getElementById('theme-label');
   if (lbl) {
-    lbl.textContent =
-      document.documentElement.getAttribute('data-theme') === 'light' ? 'LIGHT' : 'DARK';
+    lbl.textContent = themeLabel(document.documentElement.getAttribute('data-theme') === 'light');
   }
   window.addEventListener('resize', () => {
     if (window.innerWidth > 768) closeSidebar();

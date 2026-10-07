@@ -22,7 +22,12 @@
    ═══════════════════════════════════════════════════════════ */
 (() => {
   let counter = 0;
-  const PLACEHOLDER = 'pega el output aquí (opcional)...';
+  /* Textos según el idioma de la página (<html lang="es|en">) */
+  const EN = (document.documentElement.lang || '').startsWith('en');
+  const TXT = EN
+    ? { placeholder: 'paste the output here (optional)...', copy: 'copy cmd', copied: '✓ copied', none: 'none' }
+    : { placeholder: 'pega el output aquí (opcional)...', copy: 'copiar cmd', copied: '✓ copiado', none: 'ninguno' };
+  const PLACEHOLDER = TXT.placeholder;
   const TAGS = {
     pentest: 'red', recon: 'blue', exploit: 'gold', misc: 'grey',
   };
@@ -55,7 +60,7 @@
           <span class="tag-pill blue" data-set="recon">recon</span>
           <span class="tag-pill gold" data-set="exploit">exploit</span>
           <span class="tag-pill grey" data-set="misc">misc</span>
-          <span class="tag-pill grey" data-set="">ninguno</span>
+          <span class="tag-pill grey" data-set="">${TXT.none}</span>
         </div>`;
 
       const hasOutput = output ? ' has-output' : '';
@@ -94,7 +99,7 @@
                    data-placeholder="${output ? '0' : '1'}">${outContent}</div>
             </div>
             <div class="term-actions">
-              <button class="term-act-btn" data-role="copy">copiar cmd</button>
+              <button class="term-act-btn" data-role="copy">${TXT.copy}</button>
             </div>
           </div>
         </div>`;
@@ -127,7 +132,7 @@
       });
       out.addEventListener('blur', () => {
         if (!out.textContent.trim()) {
-          out.textContent = 'pega el output aquí (opcional)...';
+          out.textContent = PLACEHOLDER;
           out.style.color = '#444';
           out.style.fontStyle = 'italic';
           out.dataset.placeholder = '1';
@@ -168,9 +173,9 @@
       // copiar comando
       copy.addEventListener('click', () => {
         navigator.clipboard.writeText(cmd.value).then(() => {
-          copy.textContent = '✓ copiado';
+          copy.textContent = TXT.copied;
           copy.classList.add('copy-done');
-          setTimeout(() => { copy.textContent = 'copiar cmd'; copy.classList.remove('copy-done'); }, 1500);
+          setTimeout(() => { copy.textContent = TXT.copy; copy.classList.remove('copy-done'); }, 1500);
         });
       });
     }

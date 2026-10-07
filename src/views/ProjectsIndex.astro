@@ -1,0 +1,41 @@
+---
+/* Tarjetas de proyectos (los dos idiomas) */
+import Base from '../layouts/Base.astro';
+import { getProjects } from '../lib/nav';
+import { tagInfo } from '../lib/tags';
+import { useT, type Lang } from '../i18n/ui';
+import { localePath } from '../i18n/utils';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useT(lang);
+const projects = await getProjects(lang);
+
+const ACCENT = {
+  red:  'linear-gradient(to right, var(--red), var(--gold))',
+  blue: 'linear-gradient(to right, var(--blue), var(--gold))',
+};
+const year = new Date().getFullYear();
+---
+<Base lang={lang} title={t('nav.projects')} breadcrumb={[t('nav.projects')]}>
+  <div class="page-hero">
+    <div class="page-eyebrow">// {t('projects.eyebrow')}</div>
+    <h1 class="page-title">{t('nav.projects')}</h1>
+    <div class="page-subtitle">{t('updated')}: {year}</div>
+  </div>
+  <div class="projects-grid">
+    {projects.map((p, i) => (
+      <a class="project-card" href={localePath(lang, `projects/${p.id}/`)}>
+        <div class="project-accent" style={`background: ${ACCENT[p.entry.data.accent]}`}></div>
+        <div class="project-body">
+          <div class="project-number">{String(i + 1).padStart(2, '0')}</div>
+          <div class="project-title">{p.title}</div>
+          <div class="project-desc">{p.entry.data.description}</div>
+          <div class="project-tags">
+            {p.entry.data.tags.map((tg) => { const { label, cls } = tagInfo(tg); return <span class={`card-tag ${cls}`}>{label}</span>; })}
+          </div>
+        </div>
+      </a>
+    ))}
+  </div>
+</Base>

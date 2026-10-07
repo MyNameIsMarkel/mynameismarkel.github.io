@@ -1,24 +1,4 @@
 ---
-/* DOCUMENT TEMPLATES — la lista se edita en src/data/templates.ts */
-import Base from '../layouts/Base.astro';
-import { TEMPLATES } from '../data/templates';
+import Templates from '../views/Templates.astro';
 ---
-<Base title="Document templates" breadcrumb={['DOCUMENT TEMPLATES']}>
-  <div class="page-hero gold-accent">
-    <div class="page-eyebrow gold">// Documentación</div>
-    <h1 class="page-title">Plantillas</h1>
-    <div class="page-subtitle">Descarga directa desde Google Drive</div>
-  </div>
-  <div class="template-list">
-    {TEMPLATES.map((t) => (
-      <a class="template-item" href={t.url} target="_blank" rel="noopener">
-        <div class="template-icon">{t.icon}</div>
-        <div>
-          <div class="template-name">{t.name}</div>
-          <div class="template-meta">{t.meta}</div>
-        </div>
-        <span class="template-arrow">→</span>
-      </a>
-    ))}
-  </div>
-</Base>
+<Templates lang="es" />

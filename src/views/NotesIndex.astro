@@ -1,0 +1,31 @@
+---
+/* Índice con todas las notas (los dos idiomas) */
+import Base from '../layouts/Base.astro';
+import { getNotes, noteFolders } from '../lib/nav';
+import { useT, type Lang } from '../i18n/ui';
+import { localePath } from '../i18n/utils';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useT(lang);
+const notes = (await getNotes(lang)).sort((a, b) => a.id.localeCompare(b.id));
+---
+<Base lang={lang} title={t('nav.notes')} breadcrumb={[t('nav.notes')]}>
+  <div class="page-hero">
+    <div class="page-eyebrow">// {t('notes.eyebrow')}</div>
+    <h1 class="page-title">{t('nav.notes')}</h1>
+    <div class="page-subtitle">{notes.length} {t('notes.count')}</div>
+  </div>
+  <div class="notes-list">
+    {notes.map((n) => (
+      <a class="template-item" href={localePath(lang, `notes/${n.id}/`)}>
+        <div class="template-icon">›_</div>
+        <div>
+          <div class="template-name">{n.title}</div>
+          <div class="note-path">{noteFolders(n.id, lang).join(' › ') || t('notes.general')}</div>
+        </div>
+        <span class="template-arrow">→</span>
+      </a>
+    ))}
+  </div>
+</Base>

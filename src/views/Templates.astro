@@ -1,0 +1,29 @@
+---
+/* PLANTILLAS / TEMPLATES — la lista se edita en src/data/templates.ts */
+import Base from '../layouts/Base.astro';
+import { TEMPLATES } from '../data/templates';
+import { useT, tr, type Lang } from '../i18n/ui';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useT(lang);
+---
+<Base lang={lang} title={t('nav.templates')} breadcrumb={[t('crumb.templates')]}>
+  <div class="page-hero gold-accent">
+    <div class="page-eyebrow gold">// {t('templates.eyebrow')}</div>
+    <h1 class="page-title">{t('templates.title')}</h1>
+    <div class="page-subtitle">{t('templates.sub')}</div>
+  </div>
+  <div class="template-list">
+    {TEMPLATES.map((tp) => (
+      <a class="template-item" href={tp.url} target="_blank" rel="noopener">
+        <div class="template-icon">{tp.icon}</div>
+        <div>
+          <div class="template-name">{tr(tp.name, lang)}</div>
+          <div class="template-meta">{tr(tp.meta, lang)}</div>
+        </div>
+        <span class="template-arrow">→</span>
+      </a>
+    ))}
+  </div>
+</Base>

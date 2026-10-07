@@ -125,3 +125,14 @@ a.template-item { display: flex; }
   .projects-grid { grid-template-columns: 1fr; }
   .info-grid { grid-template-columns: 1fr; }
 }
+
+/* aviso "solo disponible en ..." */
+.lang-notice {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem; letter-spacing: 0.06em;
+  color: var(--gold);
+  border: 1px dashed rgba(211,160,68,0.45);
+  background: rgba(211,160,68,0.06);
+  padding: 8px 14px; margin: -16px 0 28px;
+  max-width: 920px;
+}

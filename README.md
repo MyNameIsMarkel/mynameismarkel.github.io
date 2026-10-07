@@ -224,9 +224,9 @@ En Drive, comparte cada archivo como **"Cualquier persona con el enlace" → Lec
 
 | Quiero cambiar…                     | Dónde                                   |
 |-------------------------------------|-----------------------------------------|
-| Textos del ABOUT ME, experiencia…   | `src/pages/index.astro`                 |
-| Mi foto                             | guarda `public/images/profile.jpg` y en `index.astro` sustituye el `<div class="photo-placeholder">…</div>` por `<img src="/images/profile.jpg" alt="Markel Iturbe">` |
-| Enlace de Hack The Box (ahora `#`)  | `src/pages/index.astro`                 |
+| Textos del SOBRE MÍ, experiencia…   | `src/data/profile.ts`                   |
+| Mi foto                             | `public/images/profile.png` (ruta en `HERO.photo` de `src/data/profile.ts`) |
+| Enlaces GitHub, LinkedIn, HTB, email| `LINKS` en `src/data/profile.ts`        |
 | Colores                             | `public/styles/tokens.css`              |
 | Enlaces fijos del menú              | array `NAV` en `src/components/Sidebar.astro` |
 
@@ -244,3 +244,40 @@ git push                             # 1–2 minutos después está online
 Comandos útiles:
 - `npm run build` → genera la web final en `dist/` (detecta errores antes de subir).
 - `npm run preview` → sirve esa versión final en local.
+
+---
+
+## 10. Idiomas (español / inglés)
+
+La web está en **español por defecto** (`/`) y en **inglés** en `/en/`.
+El botón **ES | EN** de la barra superior lleva a la misma página en el otro idioma.
+
+| Qué quiero traducir                          | Dónde                                              |
+|----------------------------------------------|----------------------------------------------------|
+| SOBRE MÍ (bio, experiencia, formación…)      | `src/data/profile.ts`  →  `L('español', 'english')` |
+| Menú, botones, títulos de página             | `src/i18n/ui.ts`                                   |
+| Nombre de las carpetas de notas en el menú   | `src/data/site.ts`  →  `NOTE_FOLDERS`              |
+| Plantillas                                   | `src/data/templates.ts`                            |
+| Una nota                                     | copia en `src/content/notes-en/` (ver abajo)       |
+| Un proyecto                                  | copia en `src/content/projects-en/`                |
+
+### Traducir una nota o un proyecto
+Crea el archivo en inglés con **la misma ruta y el mismo nombre** que el español:
+
+```
+src/content/notes/tools/recon/nmap.md       ← español (obligatorio)
+src/content/notes-en/tools/recon/nmap.md    ← inglés (opcional)
+```
+
+- Si **no** existe la versión inglesa, en `/en/` se muestra la española con el aviso
+  *"This note is only available in Spanish"*. Así no hace falta traducirlo todo de golpe.
+- Para que el menú en inglés no salga en español mientras tanto, añade `titleEn`
+  en la cabecera de la nota española:
+  ```markdown
+  ---
+  title: "Análisis forense"
+  titleEn: "Forensics"
+  ---
+  ```
+
+Los textos de los componentes (`copiar cmd` / `copy cmd`, `OSCURO` / `DARK`…) cambian solos según el idioma de la página.
