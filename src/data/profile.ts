@@ -34,6 +34,9 @@ export const HERO = {
 
 /* ─── Enlaces (botones bajo la bio) ─────────────────────── */
 export const LINKS = {
+  /* CV para descargar (archivos en public/cv/). Versión pública: SIN teléfono ni dirección.
+     Cuando tengas el CV en inglés, guárdalo como public/cv/Markel_Iturbe_CV_EN.pdf y cambia la ruta "en". */
+  cv: L('/cv/Markel_Iturbe_CV_ES.pdf', '/cv/Markel_Iturbe_CV_ES.pdf'),
   github:     'https://github.com/MyNameIsMarkel',
   linkedin:   'https://www.linkedin.com/in/mynameismarkel/',
   hackthebox: 'https://profile.hackthebox.com/profile/019f28b7-65b5-71f3-83ff-72ad9019897d',
