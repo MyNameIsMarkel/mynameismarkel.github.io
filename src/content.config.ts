@@ -14,6 +14,7 @@ const notes = defineCollection({
   loader: glob({ base: './src/content/notes', pattern: '**/*.md' }),
   schema: z.object({
     title: z.string(),                  // texto en el menú y título de la página
+    titleEn: z.string().optional(),     // título en inglés para el menú si aún no hay traducción
     description: z.string().optional(), // subtítulo bajo el título
     date: z.coerce.date().optional(),   // "Última actualización"
     order: z.number().default(100),     // posición en el menú (menor = más arriba)
@@ -37,4 +38,18 @@ const projects = defineCollection({
   }),
 });
 
-export const collections = { notes, projects };
+/* Traducciones al INGLÉS (opcionales).
+   Mismo nombre y misma carpeta que la nota/proyecto en español:
+     src/content/notes/tools/recon/nmap.md      (español, obligatorio)
+     src/content/notes-en/tools/recon/nmap.md   (inglés, opcional)
+   Si falta la versión en inglés, en /en/ se muestra la española con un aviso. */
+const notesEn = defineCollection({
+  loader: glob({ base: './src/content/notes-en', pattern: '**/*.md' }),
+  schema: notes.schema,
+});
+const projectsEn = defineCollection({
+  loader: glob({ base: './src/content/projects-en', pattern: '**/*.md' }),
+  schema: projects.schema,
+});
+
+export const collections = { notes, projects, notesEn, projectsEn };

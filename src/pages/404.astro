@@ -1,13 +1,16 @@
 ---
+/* 404 bilingüe: GitHub Pages usa esta página para cualquier ruta que no exista */
 import Base from '../layouts/Base.astro';
-import { url } from '../lib/paths';
+import { localePath } from '../i18n/utils';
 ---
-<Base title="404" breadcrumb={['404']}>
+<Base lang="es" title="404" breadcrumb={['404']}>
   <div class="page-hero">
     <div class="page-eyebrow red">// Error</div>
     <h1 class="page-title">404 — Not found</h1>
-    <div class="page-subtitle">Esta página no existe (todavía).</div>
+    <div class="page-subtitle">Esta página no existe (todavía) · <span lang="en">This page doesn't exist (yet)</span></div>
   </div>
   <terminal-block user="markel" host="kali" sym="㉿" path="~" cmd="cat pagina.html" tag="misc">cat: pagina.html: No such file or directory</terminal-block>
-  <a class="back-link" href={url('/')}>← Volver al inicio</a>
+  <a class="back-link" href={localePath('es', '')}>← Volver al inicio</a>
+  &nbsp;·&nbsp;
+  <a class="back-link" href={localePath('en', '')} lang="en">← Back to home</a>
 </Base>

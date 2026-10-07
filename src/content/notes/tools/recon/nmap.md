@@ -1,5 +1,6 @@
 ---
 title: "Nmap"
+titleEn: "Nmap"   # título en el menú inglés mientras no haya traducción
 description: "Escaneo de puertos, servicios y scripts NSE"
 order: 2
 date: 2026-10-06
