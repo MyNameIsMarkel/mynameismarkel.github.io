@@ -21,7 +21,7 @@ export const HERO = {
   eyebrow: L('Portfolio personal', 'Personal Portfolio'),
   firstName: 'Markel',
   lastName: 'Iturbe',
-  photo: '/images/profile.jpg',        // archivo en public/images/
+  photo: '/images/profile.webp',       // archivo en public/images/ (fondo transparente)
   role: L(
     'Grado en Ciberseguridad y Técnico Superior en Administración de Sistemas Informáticos en Red.',
     "Bachelor's Degree in Cybersecurity & Higher Technician in Networked Computer Systems Administration.",
