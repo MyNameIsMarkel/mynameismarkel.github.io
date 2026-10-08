@@ -21,6 +21,7 @@ export interface Localized<T> {
 }
 export type NoteItem = Localized<CollectionEntry<'notes'> | CollectionEntry<'notesEn'>>;
 export type ProjectItem = Localized<CollectionEntry<'projects'> | CollectionEntry<'projectsEn'>>;
+export type WriteupItem = Localized<CollectionEntry<'writeups'> | CollectionEntry<'writeupsEn'>>;
 
 const visible = ({ data }: { data: { draft: boolean } }) => import.meta.env.DEV || !data.draft;
 
@@ -52,6 +53,18 @@ export async function getProjects(lang: Lang): Promise<ProjectItem[]> {
   const en = await getCollection('projectsEn', visible);
   return merge<any>(es, en, lang).sort(
     (a, b) => a.entry.data.order - b.entry.data.order || a.title.localeCompare(b.title, lang),
+  );
+}
+
+/* Writeups de HTB: solo máquinas RETIRADAS (en `npm run dev` se ven todas, con aviso) */
+const visibleWriteup = ({ data }: { data: { draft: boolean; retired: boolean } }) =>
+  import.meta.env.DEV || (!data.draft && data.retired);
+
+export async function getWriteups(lang: Lang): Promise<WriteupItem[]> {
+  const es = await getCollection('writeups', visibleWriteup);
+  const en = await getCollection('writeupsEn', visibleWriteup);
+  return merge<any>(es, en, lang).sort(
+    (a, b) => b.entry.data.date.valueOf() - a.entry.data.date.valueOf() || a.title.localeCompare(b.title, lang),
   );
 }
 
