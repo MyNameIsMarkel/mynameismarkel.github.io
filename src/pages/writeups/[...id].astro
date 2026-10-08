@@ -1,0 +1,11 @@
+---
+import WriteupPage from '../../views/WriteupPage.astro';
+import { getWriteups } from '../../lib/nav';
+
+export async function getStaticPaths() {
+  const writeups = await getWriteups('es');
+  return writeups.map((writeup) => ({ params: { id: writeup.id }, props: { writeup } }));
+}
+const { writeup } = Astro.props;
+---
+<WriteupPage lang="es" writeup={writeup} />
