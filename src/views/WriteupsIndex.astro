@@ -1,0 +1,45 @@
+---
+/* HTB WALKTHROUGHS — tarjetas generadas con los .md de src/content/writeups */
+import Base from '../layouts/Base.astro';
+import { getWriteups } from '../lib/nav';
+import { tagInfo } from '../lib/tags';
+import { DIFF_ACCENT, DIFF_TAG, OS_ICON } from '../lib/writeups';
+import { useT, dateLocale, type Lang, type UIKey } from '../i18n/ui';
+import { localePath } from '../i18n/utils';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useT(lang);
+const writeups = await getWriteups(lang);
+const fmt = (d: Date) => d.toLocaleDateString(dateLocale(lang), { month: 'short', year: 'numeric' });
+---
+<Base lang={lang} title={t('nav.writeups')} breadcrumb={[t('nav.writeups')]}>
+  <div class="page-hero">
+    <div class="page-eyebrow">// {t('writeups.eyebrow')}</div>
+    <h1 class="page-title">{t('nav.writeups')}</h1>
+    <div class="page-subtitle">{t('writeups.sub')}</div>
+  </div>
+
+  {writeups.length === 0 && <div class="lang-notice">{t('writeups.empty')}</div>}
+
+  <div class="projects-grid">
+    {writeups.map((w, i) => {
+      const d = w.entry.data;
+      return (
+        <a class="project-card" href={localePath(lang, `writeups/${w.id}/`)}>
+          <div class="project-accent" style={`background: ${DIFF_ACCENT[d.difficulty]}`}></div>
+          <div class="project-body">
+            <div class="project-number">{String(writeups.length - i).padStart(2, '0')}</div>
+            <div class="card-eyebrow">{OS_ICON[d.os]} {d.os} · {fmt(d.date)}</div>
+            <div class="project-title">{w.title}{!d.retired && ' ⚠'}</div>
+            {d.description && <div class="project-desc">{d.description}</div>}
+            <div class="project-tags">
+              <span class={`card-tag ${DIFF_TAG[d.difficulty]}`}>{t(`diff.${d.difficulty}` as UIKey)}</span>
+              {d.tags.map((tg) => { const { label, cls } = tagInfo(tg); return <span class={`card-tag ${cls}`}>{label}</span>; })}
+            </div>
+          </div>
+        </a>
+      );
+    })}
+  </div>
+</Base>

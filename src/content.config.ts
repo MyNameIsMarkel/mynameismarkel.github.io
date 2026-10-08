@@ -38,6 +38,24 @@ const projects = defineCollection({
   }),
 });
 
+/* HTB WALKTHROUGHS ─ src/content/writeups/*.md
+   Una máquina por archivo. Solo se publica si `retired: true`:
+   las normas de Hack The Box prohíben publicar soluciones de máquinas ACTIVAS. */
+const writeups = defineCollection({
+  loader: glob({ base: './src/content/writeups', pattern: '**/*.md' }),
+  schema: z.object({
+    title: z.string(),                                                  // nombre de la máquina
+    description: z.string().optional(),                                 // resumen corto (tarjeta)
+    os: z.enum(['Linux', 'Windows', 'FreeBSD', 'OpenBSD', 'Android', 'Other']),
+    difficulty: z.enum(['Easy', 'Medium', 'Hard', 'Insane']),
+    date: z.coerce.date(),                                              // cuándo la completaste
+    retired: z.boolean(),                                               // true = retirada en HTB (obligatorio para publicar)
+    url: z.string().url().optional(),                                   // enlace a la máquina en HTB
+    tags: z.array(tag).default([]),
+    draft: z.boolean().default(false),
+  }),
+});
+
 /* Traducciones al INGLÉS (opcionales).
    Mismo nombre y misma carpeta que la nota/proyecto en español:
      src/content/notes/tools/recon/nmap.md      (español, obligatorio)
@@ -52,4 +70,9 @@ const projectsEn = defineCollection({
   schema: projects.schema,
 });
 
-export const collections = { notes, projects, notesEn, projectsEn };
+const writeupsEn = defineCollection({
+  loader: glob({ base: './src/content/writeups-en', pattern: '**/*.md' }),
+  schema: writeups.schema,
+});
+
+export const collections = { notes, projects, writeups, notesEn, projectsEn, writeupsEn };

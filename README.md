@@ -281,3 +281,36 @@ src/content/notes-en/tools/recon/nmap.md    ← inglés (opcional)
   ```
 
 Los textos de los componentes (`copiar cmd` / `copy cmd`, `OSCURO` / `DARK`…) cambian solos según el idioma de la página.
+
+---
+
+## 11. HTB Walkthroughs
+
+Sección con tus resoluciones de máquinas de Hack The Box, con la misma estética que Proyectos.
+
+### Añadir un walkthrough
+1. Copia `src/content/writeups/ejemplo.md` con el nombre de la máquina, p.ej. `src/content/writeups/lame.md`.
+2. Rellena la cabecera y **borra la línea `draft: true`**:
+   ```markdown
+   ---
+   title: "Lame"
+   description: "Samba 3.0.20 → CVE-2007-2447 → root directo"
+   os: Linux                 # Linux | Windows | FreeBSD | OpenBSD | Android | Other
+   difficulty: Easy          # Easy | Medium | Hard | Insane  (colorea la tarjeta)
+   date: 2026-10-08          # cuándo la completaste (ordena las tarjetas, más reciente primero)
+   retired: true             # obligatorio: solo se publica si la máquina está RETIRADA
+   url: https://app.hackthebox.com/machines/Lame
+   tags:
+     - { label: SMB, color: blue }
+     - CVE-2007-2447
+   ---
+   ```
+3. Escribe el contenido con los bloques ```` ```terminal ```` y el editor de pestañas (ver sección 5).
+
+> ⚠️ **Máquinas activas**: las normas de Hack The Box prohíben publicar soluciones de
+> máquinas activas. Si pones `retired: false`, el writeup **no se publica** (solo lo
+> verás en `npm run dev`, con un aviso). Cámbialo a `true` cuando HTB retire la máquina.
+
+- Capturas: guárdalas en `public/images/writeups/<maquina>/` y úsalas con `![](/images/writeups/lame/nmap.png)`.
+- Versión en inglés (opcional): mismo nombre en `src/content/writeups-en/`.
+- `ejemplo.md` (en las dos carpetas) es solo una plantilla: tiene `draft: true` y nunca se publica.
