@@ -15,13 +15,16 @@ const NAV: NavNode[] = [
   { label: t('nav.about'),     level: 0, order: 0, href: localePath(lang, '') },
   { label: t('nav.notes'),     level: 0, order: 1, children: await buildNotesTree(lang) },
   { label: t('nav.projects'),  level: 0, order: 2, href: localePath(lang, 'projects/') },
-  { label: t('nav.templates'), level: 0, order: 3, href: localePath(lang, 'templates/') },
+  { label: t('nav.writeups'),  level: 0, order: 3, href: localePath(lang, 'writeups/') },
+  { label: t('nav.templates'), level: 0, order: 4, href: localePath(lang, 'templates/') },
 ];
 
 let current = norm(Astro.url.pathname);
-// dentro de un proyecto concreto, marca PROYECTOS como activo
-const projectsPath = norm(localePath(lang, 'projects/'));
-if (current.startsWith(projectsPath)) current = projectsPath;
+// dentro de un proyecto / writeup concreto, marca su sección como activa
+for (const section of ['projects/', 'writeups/']) {
+  const base = norm(localePath(lang, section));
+  if (current.startsWith(base)) current = base;
+}
 ---
 <div id="overlay" onclick="closeSidebar()"></div>
 <nav id="sidebar" aria-label={t('menu.aria')}>
