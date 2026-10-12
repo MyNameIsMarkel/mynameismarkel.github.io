@@ -1,7 +1,7 @@
 ---
 title: "3D-Printed Drone"
 description: "Design and build of a fully functional drone using 3D printing. Includes frame design, electronic component selection and flight controller programming."
-order: 1
+order: 3
 accent: red
 tags:
   - { label: Hardware, color: gold }
