@@ -18,6 +18,9 @@ interface Props {
 const { lang, title, breadcrumb, description, styles = [] } = Astro.props;
 const css = ['tokens.css', 'sidebar.css', 'layout.css', 'components.css', 'editor.css', 'notes.css', ...styles];
 const abs = (p: string) => new URL(p, Astro.site).href;
+/* Versión del despliegue: se añade a CSS/JS (?v=...) para que el navegador
+   descargue siempre los archivos nuevos tras publicar, en vez de usar la caché. */
+const asset = (p: string) => `${url(p)}?v=${BUILD_VERSION}`;
 ---
 <!DOCTYPE html>
 <html lang={lang} data-theme="dark">
@@ -41,12 +44,12 @@ const abs = (p: string) => new URL(p, Astro.site).href;
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  {css.map((f) => <link rel="stylesheet" href={url(`styles/${f}`)} />)}
+  {css.map((f) => <link rel="stylesheet" href={asset(`styles/${f}`)} />)}
 
   <!-- JS global + componentes <terminal-block> y <code-editor> -->
-  <script is:inline src={url('scripts/main.js')} defer></script>
-  <script is:inline src={url('scripts/terminal.js')} defer></script>
-  <script is:inline src={url('scripts/editor.js')} defer></script>
+  <script is:inline src={asset('scripts/main.js')} defer></script>
+  <script is:inline src={asset('scripts/terminal.js')} defer></script>
+  <script is:inline src={asset('scripts/editor.js')} defer></script>
 </head>
 <body>
   <Sidebar lang={lang} />
