@@ -52,15 +52,21 @@ const ext = { target: '_blank', rel: 'noopener' };
         <div class="section-line"></div>
       </div>
       <div class="info-grid">
-        {g.cards.map((c) => (
-          <div class="info-card">
-            <div class="card-eyebrow">{T(c.date)}</div>
-            <div class="card-title">{T(c.title)}</div>
-            <div class="card-sub">{T(c.place)}</div>
-            {c.desc && <div class="card-desc">{T(c.desc)}</div>}
-            {c.tags.map((tag) => <span class={`card-tag ${tag.color === 'red' ? '' : tag.color}`}>{T(tag.text)}</span>)}
-          </div>
-        ))}
+        {g.cards.map((c) => {
+          /* con `url` la tarjeta entera es un enlace (se abre en otra pestaña) */
+          const El = c.url ? 'a' : 'div';
+          const link = c.url ? { href: c.url, target: '_blank', rel: 'noopener' } : {};
+          return (
+            <El class="info-card" {...link}>
+              <div class="card-eyebrow">{T(c.date)}</div>
+              <div class="card-title">{T(c.title)}</div>
+              <div class="card-sub">{T(c.place)}</div>
+              {c.desc && <div class="card-desc">{T(c.desc)}</div>}
+              {c.tags.map((tag) => <span class={`card-tag ${tag.color === 'red' ? '' : tag.color}`}>{T(tag.text)}</span>)}
+              {c.url && <div class="card-link">↗ {t('cert.verify')}</div>}
+            </El>
+          );
+        })}
       </div>
     </>
   ))}
