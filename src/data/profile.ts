@@ -14,7 +14,10 @@ const red  = (text: Localized): Tag => ({ text, color: 'red' });
 const blue = (text: Localized): Tag => ({ text, color: 'blue' });
 const gold = (text: Localized): Tag => ({ text, color: 'gold' });
 
-export interface Card { date: Localized; title: Localized; place: Localized; desc?: Localized; tags: Tag[] }
+export interface Card {
+  date: Localized; title: Localized; place: Localized; desc?: Localized; tags: Tag[];
+  url?: string;   // opcional: al hacer clic en la tarjeta se abre este enlace (p.ej. la credencial verificable)
+}
 
 /* ─── Cabecera ──────────────────────────────────────────── */
 export const HERO = {
@@ -202,6 +205,7 @@ export const CERTIFICATIONS: Card[] = [
     date: '2026',
     title: 'eJPT',
     place: 'INE Security',
+    url: 'https://certs.ine.com/ae7faabb-67c9-4562-88c7-7858155e93bb',
     tags: [red('eLearnSecurity Certified Junior Penetration Tester')],
   },
   {
