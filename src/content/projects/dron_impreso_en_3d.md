@@ -1,7 +1,7 @@
 ---
 title: "Dron Impreso en 3D"
 description: "Diseño y fabricación de un dron completamente funcional usando impresión 3D. Incluye el diseño de la estructura, selección de componentes electrónicos y programación del controlador de vuelo."
-order: 1
+order: 3
 accent: red
 tags:
   - { label: Hardware, color: gold }

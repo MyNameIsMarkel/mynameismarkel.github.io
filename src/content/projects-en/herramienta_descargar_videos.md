@@ -1,7 +1,7 @@
 ---
 title: "Video Download Tool"
 description: "Python application with a graphical interface to download videos from multiple platforms. Supports different formats and resolutions with a download queue."
-order: 2
+order: 4
 accent: blue
 tags:
   - { label: Python, color: blue }
