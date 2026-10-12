@@ -136,3 +136,13 @@ a.template-item { display: flex; }
   padding: 8px 14px; margin: -16px 0 28px;
   max-width: 920px;
 }
+
+/* tarjeta del Sobre mí convertida en enlace (p.ej. credencial verificable) */
+a.info-card { display: block; text-decoration: none; color: inherit; cursor: pointer; }
+.card-link {
+  margin-top: 12px;
+  font-family: 'JetBrains Mono', monospace; font-size: 0.68rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--gold); transition: color 0.2s;
+}
+a.info-card:hover .card-link { color: var(--red); }
