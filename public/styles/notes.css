@@ -146,3 +146,5 @@ a.info-card { display: block; text-decoration: none; color: inherit; cursor: poi
   color: var(--gold); transition: color 0.2s;
 }
 a.info-card:hover .card-link { color: var(--red); }
+[data-theme="light"] .card-link { color: #8a5a00; }
+[data-theme="light"] a.info-card:hover .card-link { color: var(--red); }
