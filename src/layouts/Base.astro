@@ -5,6 +5,7 @@ import Sidebar from '../components/Sidebar.astro';
 import Topbar from '../components/Topbar.astro';
 import { url } from '../lib/paths';
 import { SITE } from '../data/site';
+import { LINKS } from '../data/profile';
 import type { Lang } from '../i18n/ui';
 import { alternatePath } from '../i18n/utils';
 
@@ -18,6 +19,16 @@ interface Props {
 const { lang, title, breadcrumb, description, styles = [] } = Astro.props;
 const css = ['tokens.css', 'sidebar.css', 'layout.css', 'components.css', 'editor.css', 'notes.css', ...styles];
 const abs = (p: string) => new URL(p, Astro.site).href;
+/* Datos estructurados (schema.org): le dicen a Google que la web y los perfiles
+   de sameAs pertenecen a la misma persona. Los perfiles salen de LINKS (profile.ts). */
+const personLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: SITE.name,
+  url: 'https://mynameismarkel.github.io/',
+  jobTitle: 'Ciberseguridad y Administración de Sistemas',
+  sameAs: [LINKS.linkedin, LINKS.github, LINKS.hackthebox].filter((u) => u && u.startsWith('http')),
+};
 /* Versión del despliegue: se añade a CSS/JS (?v=...) para que el navegador
    descargue siempre los archivos nuevos tras publicar, en vez de usar la caché. */
 const asset = (p: string) => `${url(p)}?v=${BUILD_VERSION}`;
@@ -29,6 +40,7 @@ const asset = (p: string) => `${url(p)}?v=${BUILD_VERSION}`;
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <!-- Verificación de propiedad en Google Search Console -->
   <meta name="google-site-verification" content="Q3wjtw1cshJgzrQ45_Zua6w8n1u3boMRbaxhx7HdDr8" />
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(personLd)} />
   <title>{SITE.name}</title>
   {description && <meta name="description" content={description} />}
   <link rel="icon" type="image/svg+xml" href={url('images/logo-m.svg')} />
